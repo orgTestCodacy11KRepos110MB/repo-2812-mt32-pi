@@ -84,6 +84,10 @@ FLUIDSYNTHHOME=$(realpath external/fluidsynth)
 FLUIDSYNTHBUILDDIR=build-fluidsynth
 FLUIDSYNTHLIB=$(FLUIDSYNTHBUILDDIR)/src/libfluidsynth.a
 
+LIBADLMIDIHOME=$(realpath external/libadlmidi)
+LIBADLMIDIBUILDDIR=build-libadlmidi
+LIBADLMIDILIB=$(LIBADLMIDIBUILDDIR)/libADLMIDI.a
+
 INIHHOME=$(realpath external/inih)
 
 -include $(CIRCLE_STDLIB_CONFIG)
