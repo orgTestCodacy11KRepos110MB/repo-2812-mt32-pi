@@ -23,6 +23,9 @@ ifeq ($(strip $(GC_SECTIONS)),1)
 	echo "CFLAGS_FOR_TARGET += -ffunction-sections -fdata-sections" >> $(CIRCLE_STDLIB_CONFIG)
 endif
 
+	# Increase kernel size
+	echo "DEFINE += -D'KERNEL_MAX_SIZE = (4 * MEGABYTE)'" >> $(CIRCLE_CONFIG)
+
 	# Enable multi-core
 	echo "DEFINE += -DARM_ALLOW_MULTI_CORE" >> $(CIRCLE_CONFIG)
 
