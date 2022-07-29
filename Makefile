@@ -123,9 +123,27 @@ $(LIBADLMIDIBUILDDIR)/.done: $(CIRCLESTDLIBHOME)/.done
 	@touch $@
 
 #
+# Build libOPNMIDI
+#
+libopnmidi: $(LIBOPNMIDIBUILDDIR)/.done
+
+$(LIBOPNMIDIBUILDDIR)/.done: $(CIRCLESTDLIBHOME)/.done
+	@export CFLAGS="$(CFLAGS_FOR_TARGET)"
+	@export CXXFLAGS="$(CFLAGS_FOR_TARGET)"
+	@cmake  -B $(LIBOPNMIDIBUILDDIR) \
+			$(CMAKE_TOOLCHAIN_FLAGS) \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DWITH_MIDI_SEQUENCER=OFF \
+			-DUSE_VGM_FILE_DUMPER=OFF \
+			$(LIBOPNMIDIHOME) \
+			>/dev/null
+	@cmake --build $(LIBOPNMIDIBUILDDIR) --target OPNMIDI_static
+	@touch $@
+
+#
 # Build kernel itself
 #
-all: circle-stdlib mt32emu fluidsynth libadlmidi
+all: circle-stdlib mt32emu fluidsynth libadlmidi libopnmidi
 	@$(MAKE) -f Kernel.mk $(KERNEL).img $(KERNEL).hex
 
 #
@@ -154,3 +172,6 @@ veryclean: clean
 
 	# Clean libADLMIDI
 	@$(RM) -r $(LIBADLMIDIBUILDDIR)
+
+	# Clean libOPNMIDI
+	@$(RM) -r $(LIBOPNMIDIBUILDDIR)

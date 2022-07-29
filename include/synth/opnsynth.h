@@ -1,5 +1,5 @@
 //
-// synth.h
+// opnsynth.h
 //
 // mt32-pi - A baremetal MIDI synthesizer for Raspberry Pi
 // Copyright (C) 2020-2022 Dale Whinham <daleyo@gmail.com>
@@ -20,15 +20,36 @@
 // mt32-pi. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef _synth_h
-#define _synth_h
+#ifndef _opnsynth_h
+#define _opnsynth_h
 
-enum class TSynth
+#include <circle/types.h>
+
+#include <opnmidi.h>
+
+#include "synth/synthbase.h"
+
+class COPNSynth : public CSynthBase
 {
-	MT32,
-	SoundFont,
-	OPL,
-	OPN,
+public:
+	COPNSynth(unsigned nSampleRate);
+	virtual ~COPNSynth() override;
+
+	// CSynthBase
+	virtual bool Initialize() override;
+	virtual void HandleMIDIShortMessage(u32 nMessage) override;
+	virtual void HandleMIDISysExMessage(const u8* pData, size_t nSize) override;
+	virtual bool IsActive() override;
+	virtual void AllSoundOff() override;
+	virtual void SetMasterVolume(u8 nVolume) override;
+	virtual size_t Render(s16* pOutBuffer, size_t nFrames) override;
+	virtual size_t Render(float* pOutBuffer, size_t nFrames) override;
+	virtual void ReportStatus() const override;
+
+private:
+	OPN2_MIDIPlayer* m_pSynth;
+
+	u8 m_nVolume;
 };
 
 #endif

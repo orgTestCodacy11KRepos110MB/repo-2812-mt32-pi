@@ -88,6 +88,10 @@ LIBADLMIDIHOME=$(realpath external/libadlmidi)
 LIBADLMIDIBUILDDIR=build-libadlmidi
 LIBADLMIDILIB=$(LIBADLMIDIBUILDDIR)/libADLMIDI.a
 
+LIBOPNMIDIHOME=$(realpath external/libopnmidi)
+LIBOPNMIDIBUILDDIR=build-libopnmidi
+LIBOPNMIDILIB=$(LIBOPNMIDIBUILDDIR)/libOPNMIDI.a
+
 INIHHOME=$(realpath external/inih)
 
 -include $(CIRCLE_STDLIB_CONFIG)
